@@ -1,5 +1,8 @@
 import express, {Express} from "express";
 import cors from "cors";
+import authRoutes from "./routes/auth.routes";
+import courseRoutes from "./routes/course.routes";
+import enrollmentCollectionRoutes from "./routes/enrollmentCollection.routes";
 
 // 1. Initialize the express app
 const app: Express = express();
@@ -25,8 +28,9 @@ const corsOptions = {
 };
 app.use(cors(corsOptions)); // Enable/Allow CORS according to defined options
 
-// app.use("/api/auth", authRoutes)
-// app.use("/api/products", productRoutes)
+app.use("/api/auth", authRoutes)
+app.use("/api/courses", courseRoutes);
+app.use("/api/enrollments", enrollmentCollectionRoutes);
 
 // Expert the app to use outside (in index.ts)
 export default app;
