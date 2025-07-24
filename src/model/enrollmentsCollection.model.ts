@@ -1,10 +1,10 @@
-import mangoose from "mongoose";
+import mongoose from "mongoose";
 
 const EnrollmentsCollectionModel
-    = new mangoose.Schema(
+    = new mongoose.Schema(
     {
         id: {
-            required: true,
+            required: false,
             type: Number,
             unique: true,
             index: true
@@ -25,8 +25,8 @@ const EnrollmentsCollectionModel
             required: true,
             type: String
         }
-    }
-);
-const EnrollmentsCollection = mangoose
+        }
+    );
+const EnrollmentsCollection = mongoose
     .model("EnrollmentsCollection", EnrollmentsCollectionModel);
 export default EnrollmentsCollection;

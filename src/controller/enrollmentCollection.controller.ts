@@ -16,6 +16,7 @@ export const getAllEnrollments = async (req: Request, res: Response) => {
 export const saveEnrollment = async (req: Request, res: Response) => {
     try {
         const newEnrollment = req.body;
+        console.log(newEnrollment)
         const validationError = enrollmentCollectionService.validateEnrollment(newEnrollment);
         if (validationError) {
             res.status(400).json({
