@@ -3,15 +3,12 @@ import cors from "cors";
 import authRoutes from "./routes/auth.routes";
 import courseRoutes from "./routes/course.routes";
 import enrollmentCollectionRoutes from "./routes/enrollmentCollection.routes";
+import {authenticateToken} from "./middleware/auth.middleware";
 
-// 1. Initialize the express app
 const app: Express = express();
 
-// 2. Define Middlewares
 
-// 2.1 Instruct to parse the request payload data to be converted to JSON format
 app.use(express.json());
-// app.use(cors()); // Enable/Allow CORS here
 const allowedOrigins = [
     "http://localhost:5173"
 ];
@@ -26,11 +23,10 @@ const corsOptions = {
         }
     }
 };
-app.use(cors(corsOptions)); // Enable/Allow CORS according to defined options
+app.use(cors(corsOptions));
 
 app.use("/api/auth", authRoutes)
-app.use("/api/courses", courseRoutes);
-app.use("/api/enrollments", enrollmentCollectionRoutes);
+app.use("/api/courses",authenticateToken, courseRoutes);
+app.use("/api/enrollments",authenticateToken, enrollmentCollectionRoutes);
 
-// Expert the app to use outside (in index.ts)
 export default app;
