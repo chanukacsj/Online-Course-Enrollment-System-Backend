@@ -3,11 +3,11 @@ import * as authService from '../services/auth.service';
 
 
 export const authenticateUser = async (req: Request, res: Response) => {
-    const { username, password } = req.body;
-    console.log("Login request:", username, password);
+    const { email, password } = req.body;
+    console.log("Login request:", email, password);
 
     try {
-        const authTokens = await authService.authenticateUser(username, password);
+        const authTokens = await authService.authenticateUser(email, password);
 
         if (!authTokens) {
             return res.status(401).json({ error: "Invalid credentials" });
@@ -24,13 +24,21 @@ export const authenticateUser = async (req: Request, res: Response) => {
 };
 
 
-export const registerUser = (req: Request, res: Response) => {
-    const {username, password} = req.body;
-    const user = authService.registerUser(username, password);
+export const registerUser = async (req: Request, res: Response) => {
+    const { username, email, password } = req.body;
 
-    if (!user) {
-        res.status(400).json({error: "User registration failed"});
-        return;
+    try {
+        const user = await authService.registerUser(username, email, password);
+        console.log(user);
+
+        if (!user) {
+            res.status(400).json({ error: "User registration failed" });
+            return;
+        }
+
+        res.status(201).json({ message: "User registered successfully", user });
+    } catch (error: any) {
+        console.error(error);
+        res.status(500).json({ error: error.message || "Internal server error" });
     }
-    res.status(201).json({message: "User registered successfully", user});
-}
+};

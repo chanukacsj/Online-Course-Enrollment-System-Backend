@@ -11,10 +11,11 @@ const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET as string;
 
 const refreshTokens = new Set<string>();
 
-export const registerUser = async (username: string, password: string) => {
-    const existingUser = await UserModel.findOne({ username });
+export const registerUser = async (username: string,email: string, password: string) => {
+    const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
-        return null;
+        console.log('User with this email already exists');
+       return null;
     }
 
     const lastUser = await UserModel.findOne().sort({ id: -1 }).lean();
@@ -25,6 +26,7 @@ export const registerUser = async (username: string, password: string) => {
     const newUser = new UserModel({
         id: newId,
         username,
+        email,
         password: hashedPassword,
         role: "customer"
     });
@@ -33,8 +35,8 @@ export const registerUser = async (username: string, password: string) => {
     return newUser;
 };
 
-export const authenticateUser = async (username: string, password: string) => {
-    const existingUser = await UserModel.findOne({ username });
+export const authenticateUser = async (email: string, password: string) => {
+    const existingUser = await UserModel.findOne({ email });
 
     if (!existingUser) {
         return null;
@@ -48,7 +50,7 @@ export const authenticateUser = async (username: string, password: string) => {
     const accessToken = jwt.sign(
         { id: existingUser.id, username: existingUser.username, role: existingUser.role },
         JWT_SECRET,
-        { expiresIn: "5m" }
+        { expiresIn: "1d" }
     );
 
     const refreshToken = jwt.sign(
@@ -58,5 +60,5 @@ export const authenticateUser = async (username: string, password: string) => {
     );
 
     refreshTokens.add(refreshToken);
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken, id: existingUser.id };
 };

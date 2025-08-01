@@ -7,6 +7,7 @@ type UserDocument = UserDto & Document;
 const UserSchema = new mongoose.Schema<UserDocument>({
     id: { type: Number, required: true, unique: true, index: true },
     username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, enum: ["admin", "customer"], default: "customer" }
 });
