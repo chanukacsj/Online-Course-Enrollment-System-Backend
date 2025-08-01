@@ -36,7 +36,9 @@ export const saveEnrollment = async (req: Request, res: Response) => {
 }
 export const getEnrollmentsByUserId = async (req: Request, res: Response) => {
     try {
-        const userId = parseInt(req.params.id);
+        const userId = parseInt(req.params.userId);
+        console.log("req.params:", req.params);
+
         if (isNaN(userId)) {
             res.status(400).json({
                 error: 'Invalid user ID'

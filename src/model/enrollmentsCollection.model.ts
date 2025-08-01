@@ -1,32 +1,41 @@
 import mongoose from "mongoose";
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
-const EnrollmentsCollectionModel
-    = new mongoose.Schema(
+// @ts-ignore
+const EnrollmentsCollectionModel = new mongoose.Schema(
     {
         id: {
-            required: false,
             type: Number,
             unique: true,
-            index: true
         },
         userId: {
             required: true,
-            type: Number
+            type: Number,
         },
         courseId: {
             required: true,
-            type: Number
+            type: Number,
         },
         enrollmentDate: {
             required: true,
-            type: Date
+            type: Date,
         },
         status: {
             required: true,
-            type: String
-        }
-        }
-    );
-const EnrollmentsCollection = mongoose
-    .model("EnrollmentsCollection", EnrollmentsCollectionModel);
+            type: String,
+        },
+    },
+    {
+        timestamps: true,
+    }
+);
+
+EnrollmentsCollectionModel.plugin(AutoIncrement, { inc_field: "id" });
+
+// @ts-ignore
+const EnrollmentsCollection = mongoose.model(
+    "EnrollmentsCollection",
+    EnrollmentsCollectionModel
+);
+
 export default EnrollmentsCollection;

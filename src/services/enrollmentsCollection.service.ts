@@ -6,7 +6,9 @@ export const getAllEnrollments = async (): Promise<EnrollmentsCollectionDto[]> =
 };
 
 export const saveEnrollment = async (enrollment: EnrollmentsCollectionDto): Promise<any> => {
+    console.log("enrollment data: ", enrollment)
     return EnrollmentsCollection.create(enrollment);
+
 };
 
 export const deleteEnrollment = async (id: number) => {
