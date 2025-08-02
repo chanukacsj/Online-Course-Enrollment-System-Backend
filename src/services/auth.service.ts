@@ -60,5 +60,5 @@ export const authenticateUser = async (email: string, password: string) => {
     );
 
     refreshTokens.add(refreshToken);
-    return { accessToken, refreshToken, id: existingUser.id };
+    return { accessToken, refreshToken, id: existingUser.id, username: existingUser.username, role: existingUser.role};
 };

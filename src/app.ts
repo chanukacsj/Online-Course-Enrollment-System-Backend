@@ -3,6 +3,7 @@ import cors from "cors";
 import authRoutes from "./routes/auth.routes";
 import courseRoutes from "./routes/course.routes";
 import enrollmentCollectionRoutes from "./routes/enrollmentCollection.routes";
+import userRoutes from "./routes/user.routes";
 import {authenticateToken} from "./middleware/auth.middleware";
 
 const app: Express = express();
@@ -28,5 +29,6 @@ app.use(cors(corsOptions));
 app.use("/api/auth", authRoutes)
 app.use("/api/courses",authenticateToken, courseRoutes);
 app.use("/api/enrollments",authenticateToken, enrollmentCollectionRoutes);
+app.use("/api/users",authenticateToken, userRoutes);
 
 export default app;
