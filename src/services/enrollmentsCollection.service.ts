@@ -16,12 +16,17 @@ export const deleteEnrollment = async (id: number) => {
     return true;
 };
 
-export const updateEnrollment = async (id: number, data: EnrollmentsCollectionDto) => {
-    const enrollment = await EnrollmentsCollection.findOneAndUpdate({ id: id }, data, { new: true });
-    if (!enrollment) {
-        return null;
-    }
-    return enrollment;
+export const updateEnrollment = async (
+    id: number,
+    data: Partial<EnrollmentsCollectionDto>
+): Promise<EnrollmentsCollectionDto | null> => {
+    const enrollment = await EnrollmentsCollection.findOneAndUpdate(
+        { id },
+        data,
+        { new: true }
+    ).lean();
+
+    return enrollment || null;
 };
 
 export const validateEnrollment = (enrollment: EnrollmentsCollectionDto) => {

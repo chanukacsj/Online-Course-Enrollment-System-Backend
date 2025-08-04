@@ -1,6 +1,9 @@
 import {Request, Response} from "express";
 import * as enrollmentCollectionService from '../services/enrollmentsCollection.service';
-
+import {sendEnrollmentEmail} from "../utils/sendEmail";
+import * as userService from '../services/user.service';
+import * as courseService from '../services/course.service';
+import {getUserById} from "../services/user.service";
 
 export const getAllEnrollments = async (req: Request, res: Response) => {
     try {
@@ -63,21 +66,44 @@ export const getEnrollmentsByUserId = async (req: Request, res: Response) => {
 export const updateEnrollment = async (req: Request, res: Response) => {
     const enrollmentId = parseInt(req.params.id);
     if (isNaN(enrollmentId)) {
-        res.status(400).json({
-            error: 'Invalid enrollment ID'
-        });
-        return;
+        return res.status(400).json({ error: 'Invalid enrollment ID' });
     }
+
     const updatedData = req.body;
+
     const updatedEnrollment = await enrollmentCollectionService.updateEnrollment(enrollmentId, updatedData);
     if (!updatedEnrollment) {
-        res.status(404).json({
-            error: 'Enrollment not found'
-        });
-        return;
+        return res.status(404).json({ error: 'Enrollment not found' });
     }
-    res.status(200).json(updatedEnrollment);
-}
+
+    // Only send email if status was updated to "active"
+    if (updatedEnrollment.status === "active") {
+        const user = await userService.getUserById(updatedEnrollment.userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found for this enrollment' });
+        }
+
+        const course = await courseService.getCourseById(updatedEnrollment.courseId);
+        if (!course) {
+            return res.status(404).json({ error: 'Course not found for this enrollment' });
+        }
+
+        try {
+            await sendEnrollmentEmail(user.email, user.username, course.description);
+
+            console.log(`Enrollment email sent to ${user.email}`);
+        } catch (e) {
+            console.error("Failed to send email", e);
+            // Email failure doesn't block update response
+        }
+    }
+
+    return res.status(200).json({
+        message: "Enrollment updated successfully",
+        data: updatedEnrollment,
+    });
+};
+
 
 export const deleteEnrollment = async (req: Request, res: Response) => {
     const enrollmentId = parseInt(req.params.id);

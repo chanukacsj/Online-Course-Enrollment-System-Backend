@@ -8,6 +8,7 @@
     "serve": "node dist/index.js"
   },
   "dependencies": {
+    "@sendgrid/mail": "^8.1.5",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
