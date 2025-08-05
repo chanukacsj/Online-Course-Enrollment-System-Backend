@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const CourseModel =
     new mongoose.Schema(
@@ -28,8 +29,20 @@ const CourseModel =
             "image": {
                 required: true,
                 type: String
+            },
+            "course_start_date": {
+                type: String,
+                required: true
+            },
+            "course_end_date": {
+                type: String,
+                required: true
             }
         });
 
+CourseModel.plugin(AutoIncrement, { inc_field: "id" });
+
+
+// @ts-ignore
 const Course = mongoose.model("Course", CourseModel);
 export default Course;

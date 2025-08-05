@@ -76,7 +76,6 @@ export const updateEnrollment = async (req: Request, res: Response) => {
         return res.status(404).json({ error: 'Enrollment not found' });
     }
 
-    // Only send email if status was updated to "active"
     if (updatedEnrollment.status === "active") {
         const user = await userService.getUserById(updatedEnrollment.userId);
         if (!user) {
@@ -94,7 +93,6 @@ export const updateEnrollment = async (req: Request, res: Response) => {
             console.log(`Enrollment email sent to ${user.email}`);
         } catch (e) {
             console.error("Failed to send email", e);
-            // Email failure doesn't block update response
         }
     }
 

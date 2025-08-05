@@ -5,6 +5,7 @@ import courseRoutes from "./routes/course.routes";
 import enrollmentCollectionRoutes from "./routes/enrollmentCollection.routes";
 import userRoutes from "./routes/user.routes";
 import {authenticateToken} from "./middleware/auth.middleware";
+import contactRouter from "./routes/contact.routes";
 
 const app: Express = express();
 
@@ -30,5 +31,6 @@ app.use("/api/auth", authRoutes)
 app.use("/api/courses",authenticateToken, courseRoutes);
 app.use("/api/enrollments",authenticateToken, enrollmentCollectionRoutes);
 app.use("/api/users",authenticateToken, userRoutes);
+app.use("/api/contacts",authenticateToken, contactRouter);
 
 export default app;

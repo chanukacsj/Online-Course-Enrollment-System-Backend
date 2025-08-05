@@ -27,7 +27,7 @@ export const updateCourse = async (id: number, data: CourseDto) => {
     return course;
 }
 export const validateCourse = (course: CourseDto) => {
-    if (!course.name || !course.description || !course.price || !course.currency || !course.image) {
+    if (!course.name || !course.description || !course.price || !course.currency || !course.image || !course.course_start_date || !course.course_end_date) {
         return 'All fields are required';
     }
     return null;

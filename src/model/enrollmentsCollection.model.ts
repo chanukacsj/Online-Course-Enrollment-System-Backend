@@ -4,7 +4,7 @@ const AutoIncrement = require("mongoose-sequence")(mongoose);
 // @ts-ignore
 const EnrollmentsCollectionModel = new mongoose.Schema(
     {
-        id: {
+        enrollmentId: {
             type: Number,
             unique: true,
         },
@@ -30,7 +30,7 @@ const EnrollmentsCollectionModel = new mongoose.Schema(
     }
 );
 
-EnrollmentsCollectionModel.plugin(AutoIncrement, { inc_field: "id" });
+EnrollmentsCollectionModel.plugin(AutoIncrement, { inc_field: "enrollmentId" });
 
 // @ts-ignore
 const EnrollmentsCollection = mongoose.model(
