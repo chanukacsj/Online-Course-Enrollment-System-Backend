@@ -33,8 +33,7 @@ export const authorizeRole = (...roles: string[]) => {
     return (req: Request, res: Response, next: NextFunction) => {
         const user = (req as Request & {user?: any}).user;
         if (!user || !roles.includes(user.role)) {
-            res.sendStatus(403).json({error: "Access denied! User does not have the required role"});
-            return;
+           return  res.status(403).json({error: "Access denied! User does not have the required role"});
         }
         next();
     };

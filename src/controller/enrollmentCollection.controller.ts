@@ -8,6 +8,7 @@ import {getUserById} from "../services/user.service";
 export const getAllEnrollments = async (req: Request, res: Response) => {
     try {
         const enrollments = await enrollmentCollectionService.getAllEnrollments();
+        console.log(enrollments)
         res.status(200).json(enrollments);
     } catch (error) {
         console.error(error);
@@ -64,7 +65,7 @@ export const getEnrollmentsByUserId = async (req: Request, res: Response) => {
     }
 }
 export const updateEnrollment = async (req: Request, res: Response) => {
-    const enrollmentId = parseInt(req.params.id);
+    const enrollmentId = parseInt(req.params.enrollmentId);
     if (isNaN(enrollmentId)) {
         return res.status(400).json({ error: 'Invalid enrollment ID' });
     }
@@ -104,7 +105,8 @@ export const updateEnrollment = async (req: Request, res: Response) => {
 
 
 export const deleteEnrollment = async (req: Request, res: Response) => {
-    const enrollmentId = parseInt(req.params.id);
+    const enrollmentId = parseInt(req.params.enrollmentId);
+    console.log("enrollmentId:", enrollmentId);
     if (isNaN(enrollmentId)) {
         res.status(400).json({
             error: 'Invalid enrollment ID'

@@ -12,16 +12,22 @@ export const saveEnrollment = async (enrollment: EnrollmentsCollectionDto): Prom
 };
 
 export const deleteEnrollment = async (id: number) => {
-    await EnrollmentsCollection.deleteOne({ id: id });
+    console.log("Deleting enrollment with id: ", id);
+    const enrollment = await EnrollmentsCollection.findOne({ enrollmentId: id });
+    if (!enrollment) {
+        console.log("Enrollment not found");
+        return false;
+    }
+    await EnrollmentsCollection.deleteOne({ enrollmentId: id });
     return true;
 };
 
 export const updateEnrollment = async (
-    id: number,
+    enrollmentId: number,
     data: Partial<EnrollmentsCollectionDto>
 ): Promise<EnrollmentsCollectionDto | null> => {
     const enrollment = await EnrollmentsCollection.findOneAndUpdate(
-        { id },
+        { enrollmentId },
         data,
         { new: true }
     ).lean();
