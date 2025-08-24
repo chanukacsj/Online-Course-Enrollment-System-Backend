@@ -3,7 +3,6 @@ import { UserDto } from "../dto/user.dto";
 
 type UserDocument = UserDto & Document;
 
-// Define schema first
 const UserSchema = new mongoose.Schema<UserDocument>({
     id: { type: Number, required: true, unique: true, index: true },
     username: { type: String, required: true, unique: true },

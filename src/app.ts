@@ -8,6 +8,7 @@ import {authenticateToken} from "./middleware/auth.middleware";
 import contactRouter from "./routes/contact.routes";
 import fileUploadRoutes from "./routes/file.upload.routes";
 import path from "path";
+import paymentRoutes from "./routes/payment.routes";
 
 const app: Express = express();
 
@@ -33,7 +34,7 @@ app.use("/api/courses",authenticateToken, courseRoutes);
 app.use("/api/enrollments",authenticateToken, enrollmentCollectionRoutes);
 app.use("/api/users",authenticateToken, userRoutes);
 app.use("/api/contacts",authenticateToken, contactRouter);
-
+app.use("/api/payment",authenticateToken, paymentRoutes);
 app.use("/api/upload",authenticateToken,fileUploadRoutes)
 console.log("Serving static images from: ", path.join(__dirname, "uploads/course"));
 
