@@ -18,6 +18,7 @@ It handles core functions such as **user authentication**, **course management**
 -  **Enrollment Handling**: enroll and manage student registrations
 -  **RESTful API Design** for seamless integration with frontend apps
 -  **Optional**: Integration with third-party services (e.g., email notifications, payment gateways)
+Frontend link : https://github.com/chanukacsj/online-course-enrollment-system-frontend
 
 ---
 
@@ -28,4 +29,3 @@ It handles core functions such as **user authentication**, **course management**
 git clone https://github.com/chanukacsj/Online-Course-Enrollment-System-Backend.git
 cd Online-Course-Enrollment-System-Backend
 
-Frontend link : https://github.com/chanukacsj/online-course-enrollment-system-frontend
