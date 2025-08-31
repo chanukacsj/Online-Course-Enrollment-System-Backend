@@ -7,6 +7,11 @@ const AutoIncrement = require("mongoose-sequence")(mongoose);
 const ContactModel =
     new mongoose.Schema(
         {
+            "contactId": {
+                type: Number,
+                unique: true,
+                index: true
+            },
             "name": {
                 type: String,
                 required: true

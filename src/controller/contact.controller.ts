@@ -15,6 +15,7 @@ export const getAllContacts = async (req: Request, res: Response) => {
 export const saveContact = async (req: Request, res: Response) => {
     try {
         const newContact = req.body;
+        console.log(newContact, "newContact");
         const validationError = contactService.validateContact(newContact);
         if (validationError) {
             res.status(400).json({
